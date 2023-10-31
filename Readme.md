@@ -17,8 +17,8 @@ Después de instalar Spacy, el siguiente paso es descargar el modelo es_core_new
 python -m spacy download es_core_news_lg
 
 #Paso 4: Ejecutar
-    Conexion/Archivo para comprobar
-    Conexion/Archivo para ner
-    Operaciones python ELK/reentrenar modelo de spacy
-    Operaciones python ELK/conectarse con modelo reentrenado
-
+    
+Conexion/Archivo para comprobar
+Conexion/Archivo para ner
+Operaciones python ELK/reentrenar modelo de spacy
+Operaciones python ELK/conectarse con modelo reentrenado

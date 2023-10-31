@@ -16,8 +16,9 @@ Después de instalar Spacy, el siguiente paso es descargar el modelo es_core_new
 
 python -m spacy download es_core_news_lg
 
-#Paso 4: Instalar el modelo llama2
+#Paso 4: Ejecutar
+    Conexion/Archivo para comprobar
+    Conexion/Archivo para ner
+    Operaciones python ELK/reentrenar modelo de spacy
+    Operaciones python ELK/conectarse con modelo reentrenado
 
-Finalmente, necesitarás instalar el modelo llama2. Asegúrate de tener el archivo del modelo en tu máquina y luego puedes instalarlo con el siguiente comando (reemplaza [model] con el nombre de tu archivo de modelo):
-
-python -m spacy link [model]

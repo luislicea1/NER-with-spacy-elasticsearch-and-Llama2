@@ -3,7 +3,7 @@ Antes de comenzar, necesitarás tener instalado Elasticsearch en tu máquina. Pu
 
 Una vez descargado, puedes instalar Elasticsearch en Windows utilizando el archivo .zip. Este paquete incluye un comando elasticsearch-service.bat que configurará Elasticsearch para que se ejecute como un servicio. Puedes encontrar más detalles sobre cómo instalar Elasticsearch en Windows en la guía oficial de Elasticsearch.
 
-- [Elasticsearch](https://www.elastic.co/downloads/elasticsearch) 
+- [Elasticsearch](https://www.elastic.co/downloads/past-releases/elasticsearch-8-3-1) 
 
 ## Pasos para realizar la instalación
 

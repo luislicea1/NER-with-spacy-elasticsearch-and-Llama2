@@ -6,6 +6,8 @@ import TableList from "views/Tables.js";
 import UserPage from "views/User.js";
 import Ner from "views/Ner";
 import Modelos from "views/Modelos";
+import Reentrenamiento from "views/Reentrenamiento";
+import Displacy from "views/Displacy";
 
 var routes = [
   {
@@ -57,6 +59,20 @@ var routes = [
     name: "Modelos",
     icon: "nc-icon nc-paper",
     component: <Modelos />,
+    layout: "/admin",
+  },
+  {
+    path: "/reentrenamiento",
+    name: "Reentrenamiento",
+    icon: "nc-icon nc-paper",
+    component: <Reentrenamiento />,
+    layout: "/admin",
+  },
+  {
+    path: "/displacy",
+    name: "Displacy",
+    icon: "nc-icon nc-paper",
+    component: <Displacy />,
     layout: "/admin",
   },
   

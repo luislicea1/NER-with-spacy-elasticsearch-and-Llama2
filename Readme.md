@@ -45,7 +45,9 @@ pip install spacy
 
 After installing Spacy, the next step is to download the es_core_news_lg model. You can do it with the following command:
 
-```python -m spacy download es_core_news_lg```
+```bash
+python -m spacy download es_core_news_lg
+```
 
 - [Spacy Model](https://spacy.io/models/es)
 
@@ -53,6 +55,10 @@ After installing Spacy, the next step is to download the es_core_news_lg model. 
 # Install Docker
 Install docker on your computer
 ## Create container
-``` sudo docker build -t sentence_generator . ``` 
+```bash 
+sudo docker build -t sentence_generator . 
+``` 
 ## Run container
-``` sudo docker run -p 8000:8000 sentence_generator ```
+``` bash
+sudo docker run -p 8000:8000 sentence_generator 
+```

@@ -34,7 +34,9 @@ Once downloaded, you can install Elasticsearch on Windows using the .zip file. T
 
 To install Spacy, you will need to have Python and pip installed on your machine. Once you're ready, you can install Spacy with the following command:
 
-```pip install spacy```
+```bash
+pip install spacy
+```
 
 - [Install Spacy](https://spacy.io/usage)
 

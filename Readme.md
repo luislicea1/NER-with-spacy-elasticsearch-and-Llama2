@@ -12,7 +12,7 @@ Once downloaded, you can install Elasticsearch on Windows using the .zip file. T
 3. Copy this line: `"action.auto_create_index: .monitoring*,.watches,.triggered_watches,.watcher-histroy*,.ml"`
 4. Enter the path  `bin/elasticsearch.bat`
 5. Save user password
-6. Return to file in path `config/elasticsearch.yml` y cambiar:
+6. Return to file in path `config/elasticsearch.yml` and change:
  1. `xpack.security.http.ssl: enabled: false`
  2. `xpack.security.transport.ssl: enabled: false`
 7. Rerun `elasticsearch.bat`
@@ -48,9 +48,9 @@ After installing Spacy, the next step is to download the es_core_news_lg model. 
 - [Spacy Model](https://spacy.io/models/es)
 
 
-#Install Docker
+# Install Docker
 Install docker on your computer
-##Create container
-```sudo docker build -t sentence_generator .``` 
-##Run container
-```sudo docker run -p 8000:8000 sentence_generator```
+## Create container
+``` sudo docker build -t sentence_generator . ``` 
+## Run container
+``` sudo docker run -p 8000:8000 sentence_generator ```

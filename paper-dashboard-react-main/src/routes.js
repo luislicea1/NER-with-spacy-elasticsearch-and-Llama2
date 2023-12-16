@@ -8,6 +8,8 @@ import Ner from "views/Ner";
 import Modelos from "views/Modelos";
 import Reentrenamiento from "views/Reentrenamiento";
 import Displacy from "views/Displacy";
+import Prueba from "views/Prueba";
+import IndexNER from "views/IndexNER";
 
 var routes = [
   {
@@ -73,6 +75,20 @@ var routes = [
     name: "Displacy",
     icon: "nc-icon nc-paper",
     component: <Displacy />,
+    layout: "/admin",
+  },
+  {
+    path: "/prueba",
+    name: "Prueba",
+    icon: "nc-icon nc-paper",
+    component: <Prueba />,
+    layout: "/admin",
+  },
+  {
+    path: "/indexNER",
+    name: "IndexNER",
+    icon: "nc-icon nc-paper",
+    component: <IndexNER />,
     layout: "/admin",
   },
   

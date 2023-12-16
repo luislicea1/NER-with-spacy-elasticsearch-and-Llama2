@@ -62,3 +62,10 @@ sudo docker build -t sentence_generator .
 ``` bash
 sudo docker run -p 8000:8000 sentence_generator 
 ```
+
+
+#Run Backend
+
+```bash
+uvicorn main:app --reload --port 5000
+```

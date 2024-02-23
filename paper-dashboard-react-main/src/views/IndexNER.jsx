@@ -5,6 +5,7 @@ function IndexNER() {
   //const [html, setHtml] = useState('');
   const [indices, setIndices] = useState();
   const [indicesNerResult, setIndicesNerResult] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,6 +21,7 @@ function IndexNER() {
   useEffect(() => {}, [indicesNerResult]);
 
   async function onClickIndex(indice) {
+    setSelectedIndex(indice);
     const response = await fetch("http://localhost:5000/ner-index-result", {
       method: "POST",
       headers: {
@@ -30,7 +32,8 @@ function IndexNER() {
 
     const data = await response.json();
     console.log(data);
-    setIndicesNerResult(data);
+    // setIndicesNerResult(data);
+    setIndicesNerResult(JSON.stringify(data, null, 2)); // Convertir a string JSON
   }
 
   return (
@@ -43,21 +46,25 @@ function IndexNER() {
                 <CardTitle tag="h5">Name Entity Recognition</CardTitle>
               </CardHeader>
               <CardBody>
-                {indices?.length > 0 &&
-                  indices.map((indice) => {
-                    return (
-                      <Card key={indice}>
-                        <span
-                          onClick={() => {
-                            onClickIndex(indice);
-                          }}
-                        >
-                          {indice}
-                        </span>
-                      </Card>
-                    );
-                  })}
-                <section>
+                <div style={{display: "flex", gap: "10px"}}>
+                  {indices?.length > 0 &&
+                    indices.map((indice) => {
+                      const isSelected = selectedIndex === indice;
+                      return (
+                        <Card key={indice} style={{padding: "10px", border: "1px solid gray", backgroundColor: isSelected ? 'blue' : 'white', color: isSelected ? 'white' : 'black', cursor: "pointer"}}>
+                          <span
+                            onClick={() => {
+                              onClickIndex(indice);
+                            }}
+                          >
+                            {indice}
+                          </span>
+                        </Card>
+                      );
+                    })}
+                </div>
+                
+                {/* <section>
                   {indicesNerResult &&
                     indicesNerResult.map((res) => {
                       return (
@@ -76,7 +83,11 @@ function IndexNER() {
                         </>
                       );
                     })}
+                </section> */}
+                <section>
+                  {indicesNerResult && <pre>{indicesNerResult}</pre>}
                 </section>
+
               </CardBody>
             </Card>
           </Col>

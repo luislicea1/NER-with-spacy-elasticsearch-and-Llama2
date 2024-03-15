@@ -35,3 +35,5 @@ async def create_post(post: Post):
        return ResponseModel(message=post.message)
    except Exception as e:
        raise HTTPException(status_code=500, detail=str(e))
+
+#run : uvicorn main:app --reload --port 5000

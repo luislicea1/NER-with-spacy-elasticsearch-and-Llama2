@@ -14,7 +14,7 @@ documentos = {
     },
     "user2": {
         "username": "luis",
-        'password': "luis",
+        'password': "$2b$12$.QIlN.DplH6r6Z3uRx3AFOCZGtCOdIJQ89eJ5pQ.yz7jd2JypYUne",
         "rol": "user",
     },
     

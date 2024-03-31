@@ -46,9 +46,9 @@ export default function Login() {
       height="100vh"
       justifyContent="center"
       alignItems="center"
-      sx={{ padding: "0 20px" }}
+      sx={{ padding: "0 20px", background: "#25282F" }}
     >
-      <Box boxShadow={20} sx={{ borderRadius: "10px" }}>
+      <Box boxShadow={20} sx={{ borderRadius: "10px" , background: "white"}}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box

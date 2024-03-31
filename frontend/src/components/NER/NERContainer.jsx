@@ -17,6 +17,9 @@ import {
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
 export default function NERContainer() {
   const [indices, setIndices] = useState();
   const [indicesNerResult, setIndicesNerResult] = useState(null);
@@ -105,19 +108,29 @@ export default function NERContainer() {
         height={"calc(100vh - 125px)"}
         margin={2}
         padding={2}
+        paddingTop={1}
         sx={{
           overflow: "hidden",
           overflowY: "scroll",
         }}
       >
-        <Typography variant="h6" align="left" gutterBottom color="black">
-          Resultado
-        </Typography>
+        <Stack display={"flex"} flexDirection={"row"} justifyContent = {"space-between"} paddingBottom={1}>
+          <Typography variant="h6" align="left" gutterBottom color="black">
+            Resultado
+          </Typography>
+
+          <Button color="primary" variant="contained">Save in Elastic</Button>
+        </Stack>
         <Divider></Divider>
         <Container>
           <section style={{ color: "black" }}>
             {loading_ner && <LinearProgress />}
-            {indicesNerResult && <pre>{indicesNerResult}</pre>}
+            {/* {indicesNerResult && <pre>{indicesNerResult}</pre>} */}
+            {indicesNerResult && (
+              <SyntaxHighlighter language="json" style={dracula}>
+                {indicesNerResult}
+              </SyntaxHighlighter>
+            )}
           </section>
         </Container>
       </Box>

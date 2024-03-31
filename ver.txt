@@ -1,3 +1,24 @@
 uvicorn main:app --reload --port 5000
 run: /backend/main.py
 ##
+
+#download cmake
+https://github.com/Kitware/CMake/releases/download/v3.29.0/cmake-3.29.0-windows-x86_64.zip
+
+
+#download chocalatley
+#entrar a power shell como admin
+et-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+choco install make
+
+
+////
+en caso de que de un error de que no reconozca un compilador ,,, se descarga y se agrega al path
+
+https://github.com/niXman/mingw-builds-binaries/releases
+
+
+
+/// correr ollama
+ollama run llama2

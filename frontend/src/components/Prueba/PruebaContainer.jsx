@@ -1,6 +1,7 @@
 import { Badge, Typography, Stack, Button, Container, LinearProgress, Box , Divider, Card, TextField} from "@mui/material";
 import React, { useState, useEffect } from "react";
 
+
 export default function PruebaContainer() {
 
     const [inputData, setInputData] = useState({ message: "" });

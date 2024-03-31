@@ -8,11 +8,12 @@ client = Elasticsearch(['http://localhost:9200'], basic_auth=('elastic', 'elasti
 #index = "archivo_para_ner"
 #index = "archivo_para_comprobar"
 #index = "ar.datasets"
+index = 'users_datys'
 
 # Realizar la consulta para obtener todos los documentos del índice
 result = client.search(index=index, body={"query": {"match_all": {}}}, size=1000)
 
-print(result)
+#print(result)
 # Imprimir los resultados
-#for hit in result.get("hits", {}).get("hits", []):
-#    print(hit.get("_source", {}))
+for hit in result.get("hits", {}).get("hits", []):
+   print(hit.get("_source", {}))

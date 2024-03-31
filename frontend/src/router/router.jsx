@@ -9,6 +9,7 @@ const Train = lazy(() => import('../pages/Train'))
 const Prueba = lazy(() => import('../pages/Prueba'))
 const ErrorPage = lazy(() => import('../pages/ErrorPage'))
 const Login = lazy(() => import('../pages/Login'))
+const UsersAdmin = lazy(()=> import('../pages/UsersAdmin'))
 
 export const router = createBrowserRouter([
     {
@@ -18,11 +19,11 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '',
-                // element: (
-                //     <ProtectedRouter>
-                //         <Outlet></Outlet>
-                //     </ProtectedRouter>
-                // ),
+                element: (
+                    <ProtectedRouter>
+                        <Outlet></Outlet>
+                    </ProtectedRouter>
+                ),
                 children: [
                     {
                       index: true,
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
                     {
                         path: 'prueba',
                         element: <Prueba />
+                    },
+                    {
+                        path: 'users_admin',
+                        element: <UsersAdmin />
                     },
                   ]
             },

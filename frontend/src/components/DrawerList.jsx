@@ -25,7 +25,8 @@ export default function DrawerList() {
     { text: 'Home', url: '/' },
     { text: 'Name Entity recognition', url: '/ner' },
     { text: 'Train', url: '/train' },
-    { text: 'Prueba', url: '/prueba' },
+    { text: 'Test', url: '/prueba' },
+    { text: 'Users Admin', url: '/users_admin' },
  ];
 
  const DrawerList = (

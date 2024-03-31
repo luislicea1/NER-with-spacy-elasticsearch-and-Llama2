@@ -63,6 +63,12 @@ sudo docker build -t sentence_generator .
 sudo docker run -p 8000:8000 sentence_generator 
 ```
 
+# Create Docker Container
+## Create Docker Container
+docker build -t sentence_generator .
+
+## Run Docker Container
+docker run -p 8000:8000 sentence_generator
 
 #Run Backend
 

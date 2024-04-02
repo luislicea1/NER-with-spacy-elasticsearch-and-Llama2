@@ -7,10 +7,12 @@ from spacy import displacy
 from spacy.lang.es.stop_words import STOP_WORDS
 from nltk.corpus import stopwords
 from mostrarIndexElastic import elastic_router
+from login import elastic_router_login
 
 
 app = FastAPI()
 app.include_router(elastic_router)
+app.include_router(elastic_router_login)
 app.add_middleware(
    CORSMiddleware,
    allow_origins=["*"],
@@ -35,3 +37,5 @@ async def create_post(post: Post):
        return ResponseModel(message=post.message)
    except Exception as e:
        raise HTTPException(status_code=500, detail=str(e))
+
+#run : uvicorn main:app --reload --port 5000

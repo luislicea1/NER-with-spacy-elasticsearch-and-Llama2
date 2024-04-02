@@ -75,3 +75,11 @@ docker run -p 8000:8000 sentence_generator
 ```bash
 uvicorn main:app --reload --port 5000
 ```
+
+# Download and Install Ollama
+- [download ollama](https://ollama.com/)
+
+## Install llama2 model
+```bash
+ollama run llama2
+```

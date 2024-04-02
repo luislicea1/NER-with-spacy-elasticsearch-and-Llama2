@@ -27,10 +27,6 @@ async def post_login_result(post: Post):
         print(user_find)
         username_db, password_db, rol_db = user_find['username'], user_find['password'], user_find['rol']
         
-        #user = post.user
-        #password = post.password
-        # hashed_password = pwd_context.hash(password)
-        
         if pwd_context.verify(post.password, password_db):
             print("Autenticación correcta")
             print(rol_db)

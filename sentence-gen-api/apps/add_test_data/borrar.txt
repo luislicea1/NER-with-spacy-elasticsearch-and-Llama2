@@ -1,0 +1,449 @@
+[
+  {
+    "sentence": "El equipo de fútbol Barcelona ganó la liga española en 2021",
+    "entities": [
+      {
+        "name": "Barcelona",
+        "start": 20,
+        "end": 29,
+        "label": "LOC"
+      },
+      {
+        "name": "2021",
+        "start": 55,
+        "end": 59,
+        "label": "DATE"
+      }
+    ]
+  },
+  {
+    "sentence": "Elon Musk es el fundador y CEO de Tesla Inc.",
+    "entities": [
+      {
+        "name": "Elon Musk",
+        "start": 0,
+        "end": 9,
+        "label": "PERSON"
+      },
+      {
+        "name": "CEO",
+        "start": 27,
+        "end": 30,
+        "label": "MISC"
+      },
+      {
+        "name": "Tesla Inc",
+        "start": 34,
+        "end": 43,
+        "label": "LOC"
+      }
+    ]
+  },
+  {
+    "sentence": "La empresa Apple lanzó su nuevo iPhone en septiembre de 2022",
+    "entities": [
+      {
+        "name": "Apple",
+        "start": 11,
+        "end": 16,
+        "label": "ORG"
+      },
+      {
+        "name": "iPhone",
+        "start": 32,
+        "end": 38,
+        "label": "MISC"
+      },
+      {
+        "name": "septiembre de 2022",
+        "start": 42,
+        "end": 60,
+        "label": "DATE"
+      }
+    ]
+  },
+  {
+    "sentence": "El escritor Gabriel García Márquez nació en Aracataca, Colombia",
+    "entities": [
+      {
+        "name": "Gabriel García Márquez",
+        "start": 12,
+        "end": 34,
+        "label": "PERSON"
+      },
+      {
+        "name": "Aracataca",
+        "start": 44,
+        "end": 53,
+        "label": "LOC"
+      },
+      {
+        "name": "Colombia",
+        "start": 55,
+        "end": 63,
+        "label": "LOC"
+      }
+    ]
+  },
+  {
+    "sentence": "El presidente de Estados Unidos, Joe Biden, visitó Europa en junio de 2021",
+    "entities": [
+      {
+        "name": "Estados Unidos",
+        "start": 17,
+        "end": 31,
+        "label": "LOC"
+      },
+      {
+        "name": "Joe Biden",
+        "start": 33,
+        "end": 42,
+        "label": "PERSON"
+      },
+      {
+        "name": "Europa",
+        "start": 51,
+        "end": 57,
+        "label": "LOC"
+      },
+      {
+        "name": "junio de 2021",
+        "start": 61,
+        "end": 74,
+        "label": "DATE"
+      }
+    ]
+  },
+  {
+    "sentence": "El grupo musical The Beatles se formó en Liverpool, Reino Unido en 1960",
+    "entities": [
+      {
+        "name": "The Beatles",
+        "start": 17,
+        "end": 28,
+        "label": "PERSON"
+      },
+      {
+        "name": "Liverpool",
+        "start": 41,
+        "end": 50,
+        "label": "LOC"
+      },
+      {
+        "name": "Reino Unido",
+        "start": 52,
+        "end": 63,
+        "label": "LOC"
+      },
+      {
+        "name": "1960",
+        "start": 67,
+        "end": 71,
+        "label": "DATE"
+      }
+    ]
+  },
+  {
+    "sentence": "La película The Shawshank Redemption fue estrenada en 1994",
+    "entities": [
+      {
+        "name": "The Shawshank Redemption",
+        "start": 12,
+        "end": 36,
+        "label": "PERSON"
+      },
+      {
+        "name": "1994",
+        "start": 54,
+        "end": 58,
+        "label": "DATE"
+      }
+    ]
+  },
+  {
+    "sentence": "El río Amazonas es el río más largo del mundo y atraviesa Sudamérica",
+    "entities": [
+      {
+        "name": "río Amazonas",
+        "start": 3,
+        "end": 15,
+        "label": "MISC"
+      },
+      {
+        "name": "Sudamérica",
+        "start": 58,
+        "end": 68,
+        "label": "LOC"
+      }
+    ]
+  },
+  {
+    "sentence": "La ciudad de Nueva York es conocida como la Gran Manzana",
+    "entities": [
+      {
+        "name": "Nueva York",
+        "start": 13,
+        "end": 23,
+        "label": "LOC"
+      },
+      {
+        "name": "Gran Manzana",
+        "start": 44,
+        "end": 56,
+        "label": "LOC"
+      }
+    ]
+  },
+  {
+    "sentence": "El fundador de Facebook, Mark Zuckerberg, nació en 1984",
+    "entities": [
+      {
+        "name": "Mark Zuckerberg",
+        "start": 25,
+        "end": 40,
+        "label": "PERSON"
+      },
+      {
+        "name": "1984",
+        "start": 51,
+        "end": 55,
+        "label": "DATE"
+      }
+    ]
+  },
+  {
+    "sentence": "El científico Albert Einstein formuló la teoría de la relatividad en 1905",
+    "entities": [
+      {
+        "name": "Albert Einstein",
+        "start": 14,
+        "end": 29,
+        "label": "PERSON"
+      },
+      {
+        "name": "1905",
+        "start": 69,
+        "end": 73,
+        "label": "DATE"
+      }
+    ]
+  },
+  {
+    "sentence": "La empresa Microsoft fue fundada en 1975 por Bill Gates y Paul Allen",
+    "entities": [
+      {
+        "name": "Microsoft",
+        "start": 11,
+        "end": 20,
+        "label": "ORG"
+      },
+      {
+        "name": "1975",
+        "start": 36,
+        "end": 40,
+        "label": "DATE"
+      },
+      {
+        "name": "Bill Gates",
+        "start": 45,
+        "end": 55,
+        "label": "PERSON"
+      },
+      {
+        "name": "Paul Allen",
+        "start": 58,
+        "end": 68,
+        "label": "PERSON"
+      }
+    ]
+  },
+  {
+    "sentence": "La Torre Eiffel es uno de los monumentos más famosos de París, Francia",
+    "entities": [
+      {
+        "name": "Torre Eiffel",
+        "start": 3,
+        "end": 15,
+        "label": "MISC"
+      },
+      {
+        "name": "París",
+        "start": 56,
+        "end": 61,
+        "label": "LOC"
+      },
+      {
+        "name": "Francia",
+        "start": 63,
+        "end": 70,
+        "label": "LOC"
+      }
+    ]
+  },
+  {
+    "sentence": "El escritor Ernest Hemingway vivió en Cuba durante la década de 1950",
+    "entities": [
+      {
+        "name": "Ernest Hemingway",
+        "start": 12,
+        "end": 28,
+        "label": "PERSON"
+      },
+      {
+        "name": "Cuba",
+        "start": 38,
+        "end": 42,
+        "label": "LOC"
+      },
+      {
+        "name": "1950",
+        "start": 64,
+        "end": 68,
+        "label": "DATE"
+      }
+    ]
+  },
+  {
+    "sentence": "La ciudad de Tokio es la capital de Japón",
+    "entities": [
+      {
+        "name": "Tokio",
+        "start": 13,
+        "end": 18,
+        "label": "LOC"
+      },
+      {
+        "name": "Japón",
+        "start": 36,
+        "end": 41,
+        "label": "LOC"
+      }
+    ]
+  },
+  {
+    "sentence": "La banda de rock Queen fue fundada en Londres, Reino Unido en 1970",
+    "entities": [
+      {
+        "name": "Londres",
+        "start": 38,
+        "end": 45,
+        "label": "LOC"
+      },
+      {
+        "name": "Reino Unido",
+        "start": 47,
+        "end": 58,
+        "label": "LOC"
+      },
+      {
+        "name": "1970",
+        "start": 62,
+        "end": 66,
+        "label": "DATE"
+      }
+    ]
+  },
+  {
+    "sentence": "El actor Tom Hanks ha ganado dos premios Oscar a lo largo de su carrera",
+    "entities": [
+      {
+        "name": "Tom Hanks",
+        "start": 9,
+        "end": 18,
+        "label": "PERSON"
+      },
+      {
+        "name": "Oscar",
+        "start": 41,
+        "end": 46,
+        "label": "MISC"
+      }
+    ]
+  },
+  {
+    "sentence": "El Gran Cañón del Colorado es un parque nacional ubicado en Estados Unidos",
+    "entities": [
+      {
+        "name": "Gran Cañón del Colorado",
+        "start": 3,
+        "end": 26,
+        "label": "LOC"
+      },
+      {
+        "name": "Estados Unidos",
+        "start": 60,
+        "end": 74,
+        "label": "LOC"
+      }
+    ]
+  },
+  {
+    "sentence": "La compañía Google fue fundada en 1998 por Larry Page y Sergey Brin",
+    "entities": [
+      {
+        "name": "Google",
+        "start": 12,
+        "end": 18,
+        "label": "ORG"
+      },
+      {
+        "name": "1998",
+        "start": 34,
+        "end": 38,
+        "label": "DATE"
+      },
+      {
+        "name": "Larry Page",
+        "start": 43,
+        "end": 53,
+        "label": "PERSON"
+      },
+      {
+        "name": "Sergey Brin",
+        "start": 56,
+        "end": 67,
+        "label": "PERSON"
+      }
+    ]
+  },
+  {
+    "sentence": "El explorador Cristóbal Colón llegó a América en 1492",
+    "entities": [
+      {
+        "name": "Cristóbal Colón",
+        "start": 14,
+        "end": 29,
+        "label": "PERSON"
+      },
+      {
+        "name": "América",
+        "start": 38,
+        "end": 45,
+        "label": "LOC"
+      },
+      {
+        "name": "1492",
+        "start": 49,
+        "end": 53,
+        "label": "DATE"
+      }
+    ]
+  },
+  {
+    "sentence": "El teamacere perdio el juego de pelota contra el equipo de los Estados Unidos",
+    "entities": [
+      {
+        "name": "teamacere",
+        "start": 3,
+        "end": 12,
+        "label": "ORG"
+      },
+      {
+        "name": "Estados Unidos",
+        "start": 63,
+        "end": 77,
+        "label": "LOC"
+      }
+    ]
+  }
+]

@@ -56,9 +56,40 @@ export default function NERContainer() {
     const data = await response.json();
     console.log(data);
     setLoading_ner(false)
-    // setIndicesNerResult(data);
     setIndicesNerResult(JSON.stringify(data, null, 2)); // Convertir a string JSON
   }
+
+  async function saveInElastic() {
+    if (!selectedIndex || !indicesNerResult) {
+       alert("Por favor, selecciona un índice y obtén resultados antes de guardar.");
+       return;
+    }
+   
+    setLoading(true);
+    try {
+       const response = await fetch("http://localhost:5000/save_in_elastic", {
+         method: "POST",
+         headers: {
+           "Content-Type": "application/json",
+         },
+         body: JSON.stringify({
+           indice: selectedIndex,
+           data: JSON.parse(indicesNerResult), // Asegúrate de que indicesNerResult esté en formato JSON
+         }),
+       });
+   
+       if (!response.ok) {
+         throw new Error("Error al guardar en Elasticsearch");
+       }
+   
+       const data = await response.json();
+       alert("Datos guardados exitosamente");
+    } catch (error) {
+       alert(`Error: ${error.message}`);
+    } finally {
+       setLoading(false);
+    }
+   }
 
   return (
     <Stack display={"flex"} flexDirection={"row"}>
@@ -119,7 +150,7 @@ export default function NERContainer() {
             Resultado
           </Typography>
 
-          <Button color="primary" variant="contained">Save in Elastic</Button>
+          <Button color="primary" variant="contained" onClick={saveInElastic}>Save in Elastic</Button>
         </Stack>
         <Divider></Divider>
         <Container>

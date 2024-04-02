@@ -1,4 +1,4 @@
-import { setToken, setUser, setUserId } from "../utils/auth";
+import { setRole, setToken, setUser, setUserId } from "../utils/auth";
 
 class AuthService {
     constructor() {
@@ -24,6 +24,8 @@ class AuthService {
             }
 
             const tokenData = await response.json();
+            console.log(tokenData)
+            setRole(tokenData)
             setToken(tokenData)
             setUser(username)
             setUserId(tokenData.user_id)

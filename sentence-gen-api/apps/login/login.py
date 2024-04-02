@@ -33,7 +33,8 @@ async def post_login_result(post: Post):
         
         if pwd_context.verify(post.password, password_db):
             print("Autenticación correcta")
-            return True
+            print(rol_db)
+            return rol_db
         else:
             print("Fallo en la autenticación")
         

@@ -2,3 +2,4 @@ OllamaSetup.exe
 sentence-gen-api.zip
 sentence-gen-api/es_core_news_lg-3.4.0.tar.gz
 sentence-gen-api/llama-2-7b-chat.Q3_K_L_2.gguf
+env_ner/

@@ -7,7 +7,7 @@ from fastapi import APIRouter
 from passlib.context import CryptContext
 from typing import List, Dict
 
-class Post(BaseModel):
+class User(BaseModel):
     username: str
     password: str
     rol: str
@@ -25,21 +25,21 @@ elastic_router_users_admin = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 @elastic_router_users_admin.post("/insert_user")
-async def post_user_admin(post: Post):
+async def register(user: User):
     try:
         es = Elasticsearch(["http://localhost:9200"], basic_auth=("elastic", "elastic"))
         index = "users_datys"
         
-        user_exists = es.search(index=index, body={"query": {"match": {"username": post.username}}})
+        user_exists = es.search(index=index, body={"query": {"match": {"username": user.username}}})
         if user_exists['hits']['total']['value'] > 0:
             return {"message": "El usuario ya existe"}
         
-        hashed_password = pwd_context.hash(post.password)
+        hashed_password = pwd_context.hash(user.password)
         
         user_doc = {
-            "username": post.username,
+            "username": user.username,
             "password": hashed_password,
-            "rol": post.rol
+            "rol": user.rol
         }
         es.index(index=index, body=user_doc)
         

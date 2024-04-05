@@ -53,60 +53,70 @@ def getPythonzonas():
     docs = es.search(index=indexName, body={"query": {"match_all": {}}}, size=1000)
     return [docEntity(d) for d in docs["hits"]["hits"]]
 
+#################################
+def prepare_train_data(arr):
+    TRAIN_DATA = []
+    for el in arr:
+        texto = el["_source"]["text"]
+        entities = el["_source"]["entities"]
+        entities_formatted = [(entity["start"], entity["end"], entity["label"]) for entity in entities]
+        resultado = (texto, {"entities": entities_formatted})
+        TRAIN_DATA.append(resultado)
+    return TRAIN_DATA
+
+def load_or_create_model(output_dir):
+    if os.path.exists(output_dir):
+        print("Cargando el modelo desde", output_dir)
+        return spacy.load(output_dir)
+    else:
+        print("Creando un nuevo modelo en blanco")
+        return spacy.blank('es')
+    
+def configure_ner(nlp):
+    if 'ner' not in nlp.pipe_names:
+        ner = nlp.create_pipe('ner')
+        nlp.add_pipe('ner', last=True)
+    else:
+        ner = nlp.get_pipe('ner')
+    ner.cfg["noisereduce"] = True
+    
+def convert_to_examples(TRAIN_DATA, nlp):
+    examples = []
+    for text, annotations in TRAIN_DATA:
+        examples.append(Example.from_dict(nlp.make_doc(text), annotations))
+    return examples
+
+def train_model(nlp, examples, n_iter):
+    other_pipes = [pipe for pipe in nlp.pipe_names if pipe != 'ner']
+    with nlp.disable_pipes(*other_pipes):
+        optimizer = nlp.begin_training()
+        for itn in range(n_iter):
+            random.shuffle(examples)
+            losses = {}
+            for batch in spacy.util.minibatch(examples, size=compounding(4.0, 32.0, 1.001)):
+                nlp.update(
+                    batch,
+                    drop=0.5,
+                    sgd=optimizer,
+                    losses=losses)
+            print(losses)
+
 @elastic_router_train_model.post('/train_model_es')
 async def post_save_in_elastic(post: ModelTrainData):
     try:
-        
-        save_train_data(post,"es_train_data")
-        
+        save_train_data(post, "es_train_data")
         arr = getPythonzonas()
-        TRAIN_DATA = []
+        TRAIN_DATA = prepare_train_data(arr)
         
-        for el in arr:
-            texto = el["_source"]["text"]
-            entities = el["_source"]["entities"]
-            entities_formatted = [(entity["start"], entity["end"], entity["label"]) for entity in entities]
-            resultado = (texto, {"entities": entities_formatted})
-            TRAIN_DATA.append(resultado)
-    
         n_iter = 100
-        if os.path.exists(output_dir):
-            print("Cargando el modelo desde", output_dir)
-            nlp = spacy.load(output_dir)
-        else:
-            print("Creando un nuevo modelo en blanco")
-            nlp = spacy.blank('es')
-            
-        if 'ner' not in nlp.pipe_names:
-            ner = nlp.create_pipe('ner')
-            nlp.add_pipe('ner', last=True)
-        else:
-            ner = nlp.get_pipe('ner')
+        nlp = load_or_create_model(output_dir)
         
-        ner.cfg["noisereduce"] = True
+        configure_ner(nlp)
         
-        # Convertir TRAIN_DATA a objetos Example
-        examples = []
-        for text, annotations in TRAIN_DATA:
-            examples.append(Example.from_dict(nlp.make_doc(text), annotations))
-            
-        other_pipes = [pipe for pipe in nlp.pipe_names if pipe != 'ner']
-
-        # Desactivar las otras componentes del pipeline y entrenar solo la NER 
-        with nlp.disable_pipes(*other_pipes):
-            optimizer = nlp.begin_training()
-            for itn in range(n_iter):
-                random.shuffle(examples)
-                losses = {}
-                for batch in spacy.util.minibatch(examples, size=compounding(4.0, 32.0, 1.001)):
-                    nlp.update(
-                        batch,
-                        drop=0.5,
-                        sgd=optimizer,
-                        losses=losses)
-                print(losses)
-                
-        #Guardar el modelo
+        examples = convert_to_examples(TRAIN_DATA, nlp)
+        
+        train_model(nlp, examples, n_iter)
+        
         nlp.to_disk(output_dir)
         
     except Exception as e:

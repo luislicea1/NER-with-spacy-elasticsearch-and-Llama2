@@ -1,34 +1,25 @@
 import React,{useEffect, useState} from "react";
 import {
-    Badge,
     Typography,
     Stack,
     Button,
-    Container,
-    LinearProgress,
     Box,
     Divider,
-    Card,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
     Modal,
-    Alert
   } from "@mui/material";
 
 import MediaCard from "./CardHome";
 import imagen_ner from '../../assets/ner.svg'
 import imagen_test from '../../assets/test.svg'
 import imagen_fine from '../../assets/ia.svg'
+import { useTranslation } from 'react-i18next';
 
 export default function HomeContainer(){
     const [loading, setLoading] = useState(false); 
     const [initialTestDataMessage, setInitialTestDataMessage] = useState(null);
     const [openModal, setOpenModal] = useState(false); 
     const [modalMessage, setModalMessage] = useState('');
+    const [t,i18n] =useTranslation("global");
 
     async function onClickSendInitialTest(message) {
         setInitialTestDataMessage(message);
@@ -55,23 +46,23 @@ export default function HomeContainer(){
     return(
         <Stack display={'flex'} flexDirection={'column'} paddingTop={3} paddingLeft={15} paddingRight={15}>
             <Typography variant="h4" align="left" gutterBottom color="black">
-                Welcome Home
+                {t("home.welcome")}
             </Typography>
             <Stack display={'flex'} flexDirection={'row'} gap={5} marginBottom={3}>
-                <MediaCard url = "/ner" title = "Name Entity Recognition" imagen = {imagen_ner} text = "Perform entity recognition with Spacy and index it back to Elasticsearch "/>
-                <MediaCard url = "/train" title = "Fine Tunning Model" imagen = {imagen_fine} text = "Retrain the Spacy model so that it recognizes new entities without loss of knowledge"/>
-                <MediaCard url = "/prueba" title = "Testing Space" imagen = {imagen_test} text = "We have testing space for documents that are not in elasticsearch"/>
+                <MediaCard url = "/ner" title = {t("home.name_entity_recognition")} imagen = {imagen_ner} text = {t("home.name_entity_recognition_container")}/>
+                <MediaCard url = "/train" title = {t("home.fine_tunning_model")} imagen = {imagen_fine} text = {t("home.fine_tunning_model_container")}/>
+                <MediaCard url = "/prueba" title = {t("home.testing_space")}imagen = {imagen_test} text = {t("home.testing_space_container")}/>
             </Stack>
             <Divider></Divider>
             <Stack display={'flex'} flex={'column'} marginTop={3}>
                 <Typography variant="h4" align="left" gutterBottom color="black">
-                    Get started adding test data
+                    {t("home.get_started")}
                 </Typography>
                 <Typography variant="p" align="left" gutterBottom color="black">
-                    Initial test data to test named entity recognition and indexing in elasticsearch
+                    {t("home.get_started_container")}
                 </Typography>
                 <Button variant="contained" sx={{width: "200px", marginTop: "10px"}} onClick={() => onClickSendInitialTest("click")} >
-                    Add test data
+                    {t("btn.add_test_data")}
                 </Button>
 
 

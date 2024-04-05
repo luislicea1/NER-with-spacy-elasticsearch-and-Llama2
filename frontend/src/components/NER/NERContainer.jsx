@@ -19,6 +19,7 @@ import React, { useState, useEffect } from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useTranslation } from 'react-i18next';
 
 export default function NERContainer() {
   const [indices, setIndices] = useState();
@@ -26,6 +27,7 @@ export default function NERContainer() {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [loading, setLoading] = useState(false); 
   const [loading_ner, setLoading_ner] = useState(false); 
+  const [t,i18n] =useTranslation("global");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,9 +102,13 @@ export default function NERContainer() {
         height={"calc(100vh - 125px)"}
         margin={2}
         padding={2}
+        sx={{
+          overflow: "hidden",
+          overflowY: "scroll",
+        }}
       >
         <Typography variant="h6" align="left" gutterBottom color="black">
-          Prueba
+          {t("content.test")}
         </Typography>
         <Divider></Divider>
         <TableContainer>
@@ -147,16 +153,16 @@ export default function NERContainer() {
       >
         <Stack display={"flex"} flexDirection={"row"} justifyContent = {"space-between"} paddingBottom={1}>
           <Typography variant="h6" align="left" gutterBottom color="black">
-            Resultado
+            {t("content.result")}
           </Typography>
 
-          <Button color="primary" variant="contained" onClick={saveInElastic}>Save in Elastic</Button>
+          <Button color="primary" variant="contained" onClick={saveInElastic}>{t("btn.save_in_elastic")}</Button>
         </Stack>
         <Divider></Divider>
         <Container>
           <section style={{ color: "black" }}>
             {loading_ner && <LinearProgress />}
-            {/* {indicesNerResult && <pre>{indicesNerResult}</pre>} */}
+            
             {indicesNerResult && (
               <SyntaxHighlighter language="json" style={dracula}>
                 {indicesNerResult}

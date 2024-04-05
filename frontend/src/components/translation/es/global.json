@@ -1,0 +1,42 @@
+{
+    "header":{
+        "home": "Inicio",
+        "name_entity_recognition": "Reconocimiento de Entidades Nombradas",
+        "train": "Entrenamiento",
+        "test": "Prueba",
+        "train_model_admin": "Entrenamiento por especialista",
+        "user_admin": "Administrador de usuario",
+        "logout": "Cerrar sesión"
+    },
+    "home": {
+        "welcome": "Bienvenido a Inicio",
+        "name_entity_recognition": "Reconocimiento de Entidades Nombradas",
+        "fine_tunning_model": "Reentrenamiento del modelo",
+        "testing_space": "Espacio de pruebas",
+        "name_entity_recognition_container": "Realiza el reconocimiento de entidades con Spacy e indexalo de nuevo en Elasticsearch",
+        "fine_tunning_model_container": "Reentrena el modelo de Spacy para que reconozca nuevas entidades sin pérdida de conocimiento",
+        "testing_space_container": "Tenemos un espacio de pruebas para documentos que no están en Elasticsearch",
+        "get_started": "Comienza a añadir datos de prueba",
+        "get_started_container": "Datos de prueba iniciales para probar el reconocimiento de entidades nombradas e indexación en Elasticsearch"
+     },
+     "content":{
+        "test": "Prueba",
+        "result": "Resultado",
+        "generate_data_train": "Generar Datos de Entrenamiento"
+    },
+    "btn":{
+        "save_in_elastic": "Guardar en Elasticsearch",
+        "send": "Enviar",
+        "add_test_data": "Agregar Datos de Prueba",
+        "train_model": "Entrenar Modelo",
+        "add_user": "Agregar usuario",
+        "cancel": "Cancelar",
+        "send_to_specialist": "Enviar a especialista",
+        "delete_revision_data": "Eliminar datos de revisión"
+    },
+    "input":{
+        "write_new_entity": "Escriba la entidad",
+        "write_entity_description": "Descripción de la entidad",
+        "write_entity_type": "Tipo de entidad"
+    }
+}

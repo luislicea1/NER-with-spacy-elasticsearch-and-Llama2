@@ -49,34 +49,6 @@ def process_documents(documents: List[Dict], nlp) -> List[SentenceWithEntities]:
             results.append(SentenceWithEntities(sentence=doc["_source"]["text"], entities=entities))
     return results
 
-
-#################
-# def create_index_if_not_exists(es: Elasticsearch, index_name: str, settings: Dict):
-#     """Crea un índice en Elasticsearch si no existe."""
-#     if not es.indices.exists(index=index_name):
-#         es.indices.create(index=index_name, body=settings)
-#         print(f"El índice {index_name} se creó correctamente.")
-
-# def transform_data_for_elastic(data: List[Dict]) -> Dict:
-#     """Transforma los datos para su almacenamiento en Elasticsearch."""
-#     transformed_data = {}
-#     for i, item in enumerate(data, start=1):
-#         doc_key = f"doc{i}"
-#         transformed_data[doc_key] = {
-#             "text": item["sentence"],
-#             "entities": [{"start": ent["start"], "end": ent["end"], "label": ent["label"]} for ent in item["entities"]]
-#         }
-#     return transformed_data
-
-# def save_documents_to_elastic(es: Elasticsearch, index_name: str, transformed_data: Dict):
-#     """Guarda documentos transformados en Elasticsearch."""
-#     for doc_key, doc_value in transformed_data.items():
-#         try:
-#             es.index(index=index_name, id=doc_key, body=doc_value)
-#         except Exception as e:
-#             raise HTTPException(status_code=500, detail=str(e))
-
-
 @elastic_router.post("/ner-index-result")
 async def post_index_ner_result(post: Post):
     try:
@@ -95,9 +67,10 @@ async def get_index():
 
     indices = es.indices.get_alias(index="*")
 
+    excluded_indices = ['traza', 'users_datys', 'model_stats', 'es_train_data','data_to_review']
     result = []
     for i in indices:
-        if not "." in i:
+        if not "." in i and i not in excluded_indices:
             result.append(i)
 
     return result

@@ -1,12 +1,15 @@
-import { Badge, Typography, Stack, Button, Container, LinearProgress, Box, Divider, TextField } from "@mui/material";
+import { Badge, Typography, Stack, Button, LinearProgress, Box, Divider, TextField, Modal} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useTranslation } from 'react-i18next';
 
 export default function TrainContainer(){
     const [inputData, setInputData] = useState({ entity: "", text: "" , entity_type: ""});
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false); 
+    const [openModal, setOpenModal] = useState(false);
+    const [t,i18n] =useTranslation("global");
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -16,7 +19,6 @@ export default function TrainContainer(){
         }));
     };
     
-
     async function onClickIndex() {
         setLoading(true);
         const response = await fetch("http://localhost:5000/generate-sentences", {
@@ -33,6 +35,63 @@ export default function TrainContainer(){
         setResult(data); 
     }
 
+    async function sendDataToSpecialist(){
+        setLoading(true);
+        const documents = Object.values(result);
+        const data = { data: { data: { ...documents } } }; 
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        };
+        try {
+            const response = await fetch("http://localhost:5000/save_data_to_specialist", requestOptions);
+            const responseData = await response.json();
+            console.log(responseData);
+            alert(responseData)
+            setResult(null);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error:', error);
+            setLoading(false);
+        }
+    }
+
+    async function onClickTrain() {
+        setLoading(true);
+        const documents = Object.values(result);
+        const data = { data: { data: { ...documents } } }; 
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        };
+        try {
+            const response = await fetch("http://localhost:5000/train_model_es", requestOptions);
+            const responseData = await response.json();
+            console.log(responseData);
+            setResult(null);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error:', error);
+            setLoading(false);
+        }
+    }
+
+    const onClickTrainModel = () => {
+        setOpenModal(true);
+    }
+    const handleModalAction = (action) => {
+        setOpenModal(false);
+        if (action === 'train') {
+            onClickTrain();
+        }
+        else if (action === 'specialist'){
+            sendDataToSpecialist();
+        }
+    }
+    
+
     return(
         <Stack display={'flex'} flexDirection={{ xs: 'column', sm: 'row' }}>
             <Box
@@ -44,14 +103,14 @@ export default function TrainContainer(){
                 padding={2}
             >
                 <Typography variant="h6" align="left" gutterBottom color="black" >
-                    Generate Data Train
+                    {t("content.generate_data_train")}
                 </Typography>
                 <Divider />
                 <Box marginTop={2} display={'flex'} flexDirection={'column'} gap={"20px"}>
                     <TextField
                         id="entity"
                         name="entity"
-                        label="Write new entity"
+                        label={t("input.write_new_entity")}
                         multiline
                         rows={1}
                         fullWidth
@@ -61,7 +120,7 @@ export default function TrainContainer(){
                     <TextField
                         id="text"
                         name="text"
-                        label="Write entity description"
+                        label={t("input.write_entity_description")}
                         multiline
                         rows={5}
                         fullWidth
@@ -71,15 +130,15 @@ export default function TrainContainer(){
                     <TextField
                         id="entity_type"
                         name="entity_type"
-                        label="Write entity type"
+                        label={t("input.write_entity_type")}
                         multiline
                         rows={1}
                         fullWidth
                         value={inputData.entity_type}
                         onChange={handleChange}
                     />
-                    <Button variant="contained" onClick={onClickIndex} sx={{marginTop: "10px"}} >
-                        Send
+                    <Button variant="contained" onClick={onClickIndex} sx={{marginTop: "10px"}} disabled={loading}>
+                        {t("btn.send")}
                     </Button>
                 </Box>
             </Box>
@@ -96,9 +155,12 @@ export default function TrainContainer(){
                     overflowY: 'scroll',
                  }}
             >
-                <Typography variant="h6" align="left" gutterBottom color="black">
-                    Result
-                </Typography>
+                <Stack display={'flex'} flexDirection={'row'} justifyContent={'space-between'}>
+                    <Typography variant="h6" align="left" gutterBottom color="black">
+                        {t("content.result")}
+                    </Typography>
+                    <Button variant="contained" onClick={onClickTrainModel} sx={{marginBottom: "10px"}} disabled={!result || loading}>{t("btn.train_model")}</Button>
+                </Stack>
                 <Divider />
                 {loading && <LinearProgress />}
                 <Box marginTop={2}>
@@ -111,6 +173,35 @@ export default function TrainContainer(){
                     )}
                 </Box>
             </Box>
+
+            {/* Modal */}
+            <Modal
+                open={openModal}
+                onClose={() => setOpenModal(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 600,
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                    
+                }}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2" color={'black'}>
+                        ¿Desea que un especialista haga el reentrenamiento?
+                    </Typography>
+                    <Box sx={{ mt: 2 }} display={'flex'} gap={2}>
+                        <Button onClick={() => handleModalAction('cancel')} variant="outlined" color="error">{t("btn.cancel")}</Button>
+                        <Button onClick={() => handleModalAction('specialist')} variant="contained" color="success">{t("btn.send_to_specialist")}</Button>
+                        <Button onClick={() => handleModalAction('train')} variant="contained">{t("btn.train_model")}</Button>
+                    </Box>
+                </Box>
+            </Modal>
         </Stack>
     );
 }

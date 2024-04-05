@@ -2,6 +2,7 @@ import json
 import re
 import spacy
 from pathlib import Path
+from path import output_dir
 
 def transform_to_documents_format(data):
     documents = {}
@@ -19,7 +20,6 @@ def extraer_oraciones(texto):
 
 def generar_data_train(json_oraciones, entity, entity_type):
     
-    output_dir = Path("D:\Tesis2\modelo-nuevo-es")
     nlp = spacy.load(output_dir)
     
     for i, oracion in enumerate(json_oraciones, start=1):

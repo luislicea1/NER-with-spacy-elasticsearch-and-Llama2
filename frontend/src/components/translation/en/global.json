@@ -1,0 +1,42 @@
+{
+    "header":{
+        "home": "Home",
+        "name_entity_recognition": "Name Entity Recognition",
+        "train": "Train",
+        "test": "Test",
+        "train_model_admin": "Train Model Admin",
+        "user_admin": "User Admin",
+        "logout": "Logout"
+    },
+    "home":{
+        "welcome": "Welcome Home",
+        "name_entity_recognition": "Name Entity Recognition",
+        "fine_tunning_model": "Fine Tunning Model",
+        "testing_space": "Testing Space",
+        "name_entity_recognition_container": "Perform entity recognition with Spacy and index it back to Elasticsearch",
+        "fine_tunning_model_container": "Retrain the Spacy model so that it recognizes new entities without loss of knowledge",
+        "testing_space_container": "We have testing space for documents that are not in elasticsearch",
+        "get_started": "Get started adding test data",
+        "get_started_container": "Initial test data to test named entity recognition and indexing in elasticsearch"
+    },
+    "content":{
+        "test": "Test",
+        "result": "Result",
+        "generate_data_train": "Generate Data Train"
+    },
+    "btn":{
+        "save_in_elastic": "Save in Elasticsearch",
+        "send": "Send",
+        "add_test_data": "Add Test Data",
+        "train_model": "Train Model",
+        "add_user": "Add User",
+        "cancel": "Cancel",
+        "send_to_specialist": "Send to Specialist",
+        "delete_revision_data": "Delete revision data"
+    },
+    "input":{
+        "write_new_entity": "Write new entity",
+        "write_entity_description": "Write entity description",
+        "write_entity_type": "Write entity type"
+    }
+}

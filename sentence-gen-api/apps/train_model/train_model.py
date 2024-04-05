@@ -149,15 +149,9 @@ async def post_train_model_spacy_admin():
     try:
         concat_data_to_review()
         arr = getPythonzonas()
-        TRAIN_DATA = []
-        
-        for el in arr:
-            texto = el["_source"]["text"]
-            entities = el["_source"]["entities"]
-            entities_formatted = [(entity["start"], entity["end"], entity["label"]) for entity in entities]
-            resultado = (texto, {"entities": entities_formatted})
-            TRAIN_DATA.append(resultado)
-    
+        TRAIN_DATA = prepare_train_data(arr)
+
+        print(arr)
         n_iter = 100
         if os.path.exists(output_dir):
             print("Cargando el modelo desde", output_dir)
@@ -198,11 +192,11 @@ async def post_train_model_spacy_admin():
         #Guardar el modelo
         nlp.to_disk(output_dir)
         
-        delete_index_data("data_to_review")
+        # delete_index_data("data_to_review")
         
         return "El modelo se a entrenado correctamente"
     except Exception as e:
-        print(f"Error en la funcion de obtencion de los datos de entrenamiento")
+        print(f"Error en la funcion de obtencion de los datos de entrenamiento Error: {e}")
 
 @elastic_router_train_model.delete('/delete_index_data_to_review')
 async def delete_index_data_to_review():

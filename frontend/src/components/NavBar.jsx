@@ -7,6 +7,8 @@ import DrawerList from './DrawerList';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Stack } from '@mui/material';
+import { getUser } from "../utils/auth";
+import { getRole } from "../utils/auth";
 
 export default function NavBar(props) {
   const navigate = useNavigate()

@@ -24,9 +24,11 @@ export default function UsersAdminContainer() {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState({});
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [rol, setRol] = useState("");
+  const [username, setUsername] = useState(selectedUser.username || "");
+  const [password, setPassword] = useState(selectedUser.password || "");
+  const [rol, setRol] = useState(selectedUser.rol || "");
+
+  
 
   const columns = [
     { field: "id", headerName: "ID", width: 200 },
@@ -64,12 +66,14 @@ export default function UsersAdminContainer() {
 
     setUsers(data);
     setLoading(false);
+    console.log("Actualizar")
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  
   const handleEdit = (row) => {
     setSelectedUser(row);
     setUsername(row.username);
@@ -84,66 +88,66 @@ export default function UsersAdminContainer() {
   };
 
   const handleSave = async () => {
-    console.log("Guardar cambios:", selectedUser);
-    const requestOptions = {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        old_username: selectedUser.username,
-        new_username: username,
-        password: password,
-        rol: rol,
-      }),
-    };
-
-    try {
-      const response = await fetch(
-        "http://localhost:5000/update_user",
-        requestOptions
-      );
-      if (!response.ok) {
-        throw new Error("Error al editar el usuario");
-      }
-      const data = await response.json();
-
-      console.log("Resultado de editar un usuario:", data);
-    } catch (error) {
-      console.error("Error al realizar la solicitud:", error);
-    }
-    handleClose();
+  const requestOptions = {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      old_username: selectedUser.username,
+      new_username: username,
+      password: password,
+      rol: rol,
+    }),
   };
 
-  const handleDelete = async (row) => {
-    const requestOptions = {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: row.username }),
-    };
-
-    try {
-      const response = await fetch(
-        "http://localhost:5000/delete_user",
-        requestOptions
-      );
-      if (!response.ok) {
-        throw new Error("Error al eliminar el usuario");
-      }
-      const data = await response.json();
-      console.log("Resultado de la eliminación:", data);
-      await fetchData();
-    } catch (error) {
-      console.error("Error al realizar la solicitud:", error);
+  try {
+    const response = await fetch(
+      "http://localhost:5000/update_user",
+      requestOptions
+    );
+    if (!response.ok) {
+      throw new Error("Error al editar el usuario");
     }
+    // Actualizar el estado local con los nuevos datos después de la actualización
+    await fetchData();
+  } catch (error) {
+    console.error("Error al realizar la solicitud:", error);
+  }
+  handleClose();
+};
+
+const handleDelete = async (row) => {
+  const requestOptions = {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username: row.username }),
   };
+
+  try {
+    const response = await fetch(
+      "http://localhost:5000/delete_user",
+      requestOptions
+    );
+    if (!response.ok) {
+      throw new Error("Error al eliminar el usuario");
+    }
+    // Actualizar el estado local con los nuevos datos después de la eliminación
+    await fetchData();
+  } catch (error) {
+    console.error("Error al realizar la solicitud:", error);
+  }
+};
+
 
   return (
     <Container sx={{ display: "grid", placeItems: "center" }}>
+      
       <AddUser fetchData={fetchData}></AddUser>
-      {loading && <LinearProgress />}
+      
       <Box
         sx={{ height: 400, width: "80%", borderRadius: "10px" }}
         boxShadow={20}
       >
+        {loading && <LinearProgress />}
         <DataGrid
           rows={users}
           columns={columns}

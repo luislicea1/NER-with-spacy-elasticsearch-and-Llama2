@@ -14,6 +14,8 @@ from apps.create_data_set.create_data_set import (extraer_oraciones, generar_dat
 from apps.add_test_data.add_test_data import elastic_router_add_test_data
 from apps.users_admin.users_admin import elastic_router_users_admin
 from apps.train_model.train_model import elastic_router_train_model
+from apps.trazas.trazas import elastic_router_traza
+from apps.train_model.borrar import elastic_router_prueba
 
 app = FastAPI(description="Generador de Oraciones usando IA")
 app.include_router(elastic_router)
@@ -22,6 +24,8 @@ app.include_router(elastic_router_login)
 app.include_router(elastic_router_add_test_data)
 app.include_router(elastic_router_users_admin)
 app.include_router(elastic_router_train_model)
+app.include_router(elastic_router_traza)
+app.include_router(elastic_router_prueba)
 
 app.add_middleware(
    CORSMiddleware,

@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from fastapi import APIRouter
 from passlib.context import CryptContext
-from typing import List, Dict
+from typing import List, Dict, Tuple
 import random
 from pathlib import Path
 import spacy
@@ -12,6 +12,7 @@ from spacy.util import compounding
 from path import output_dir
 import os
 from apps.train_model.save_train_data import save_train_data, concat_data_to_review, delete_index_data
+from apps.train_model.save_train_data import convert_to_documentos_format
 
 class Entity(BaseModel):
     name: str
@@ -28,6 +29,7 @@ class Document(BaseModel):
 
 class ModelTrainData(BaseModel):
     data: Document
+    
 elastic_router_train_model = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -100,11 +102,26 @@ def train_model(nlp, examples, n_iter):
                     sgd=optimizer,
                     losses=losses)
             print(losses)
+            
+
+def split_data(data: Dict[str, dict]) -> Tuple[Dict[str, dict], Dict[str, dict]]:
+    
+    data_list = list(data.items())
+
+    random.shuffle(data_list)
+    
+    split_index = int(len(data_list) * 0.75)
+    
+    train_data = dict(data_list[:split_index])
+    test_data = dict(data_list[split_index:])
+    
+    return train_data, test_data
 
 @elastic_router_train_model.post('/train_model_es')
 async def post_save_in_elastic(post: ModelTrainData):
     try:
         save_train_data(post, "es_train_data")
+        
         arr = getPythonzonas()
         TRAIN_DATA = prepare_train_data(arr)
         
@@ -149,6 +166,7 @@ async def post_train_model_spacy_admin():
     try:
         concat_data_to_review()
         arr = getPythonzonas()
+        print(arr)
         TRAIN_DATA = prepare_train_data(arr)
 
         print(arr)
@@ -192,7 +210,7 @@ async def post_train_model_spacy_admin():
         #Guardar el modelo
         nlp.to_disk(output_dir)
         
-        # delete_index_data("data_to_review")
+        delete_index_data("data_to_review")
         
         return "El modelo se a entrenado correctamente"
     except Exception as e:

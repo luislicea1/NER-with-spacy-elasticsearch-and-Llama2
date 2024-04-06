@@ -3,11 +3,13 @@ import React, { useState, useEffect } from "react";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useTranslation } from 'react-i18next';
+import { getUser } from "../../utils/auth";
 
 export default function TrainModelContainer(){
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false); 
     const [t,i18n] =useTranslation("global");
+    const user = getUser();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,6 +35,7 @@ export default function TrainModelContainer(){
             const responseData = await response.json();
             alert(responseData)
             setLoading(false);
+            sendTrace("Entreno el modelo en Train Model Admin")
         } catch (error) {
             console.error('Error:', error);
             setLoading(false);
@@ -50,11 +53,38 @@ export default function TrainModelContainer(){
             const responseData = await response.json();
             alert(responseData)
             setLoading(false);
+            sendTrace("Elimino datos de revisión")
         } catch (error) {
             console.error('Error:', error);
             setLoading(false);
         }
     }
+
+    const sendTrace = async (action_type) => {
+        const traceData = {
+           username: user, 
+           action_type: action_type
+        };
+       
+        try {
+           const response = await fetch('http://localhost:5000/traza', {
+             method: 'POST',
+             headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(traceData),
+           });
+       
+           if (!response.ok) {
+             throw new Error('Error al enviar la traza');
+           }
+       
+           const data = await response.json();
+           console.log('Traza enviada con éxito:', data);
+        } catch (error) {
+           console.error('Error al enviar la traza:', error);
+        }
+       };
 
     return(
         <Stack display={'flex'} flexDirection={{ xs: 'column', sm: 'row' }}>

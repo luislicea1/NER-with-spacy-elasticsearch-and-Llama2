@@ -31,8 +31,10 @@ export default function Login() {
     try {
       setLoading(true);
       const response = await authService.loginUser(username, password);
-      if (response === true) return navigate("/");
-
+      if (response === true){
+        sendTrace(username)
+        return navigate("/")
+      }
       toast.error("Las credenciales no son válidas");
     } catch (error) {
       toast.error("Las credenciales no son válidas");
@@ -40,6 +42,32 @@ export default function Login() {
       setLoading(false);
     }
   };
+
+  const sendTrace = async (username) => {
+    const traceData = {
+       username: username, 
+       action_type: "Autenticación al sistema", 
+    };
+   
+    try {
+       const response = await fetch('http://localhost:5000/traza', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify(traceData),
+       });
+   
+       if (!response.ok) {
+         throw new Error('Error al enviar la traza');
+       }
+   
+       const data = await response.json();
+       console.log('Traza enviada con éxito:', data);
+    } catch (error) {
+       console.error('Error al enviar la traza:', error);
+    }
+   };
 
   return (
     <Stack

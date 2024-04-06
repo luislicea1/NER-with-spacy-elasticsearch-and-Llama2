@@ -20,6 +20,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useTranslation } from 'react-i18next';
+import { getUser } from "../../utils/auth";
 
 export default function NERContainer() {
   const [indices, setIndices] = useState();
@@ -28,6 +29,7 @@ export default function NERContainer() {
   const [loading, setLoading] = useState(false); 
   const [loading_ner, setLoading_ner] = useState(false); 
   const [t,i18n] =useTranslation("global");
+  const user = getUser()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,12 +78,14 @@ export default function NERContainer() {
          },
          body: JSON.stringify({
            indice: selectedIndex,
-           data: JSON.parse(indicesNerResult), // Asegúrate de que indicesNerResult esté en formato JSON
+           data: JSON.parse(indicesNerResult), 
          }),
        });
    
        if (!response.ok) {
          throw new Error("Error al guardar en Elasticsearch");
+       }else{
+          sendTrace()
        }
    
        const data = await response.json();
@@ -92,6 +96,33 @@ export default function NERContainer() {
        setLoading(false);
     }
    }
+
+
+   const sendTrace = async () => {
+    const traceData = {
+       username: user, 
+       action_type: "Salvo indice de elasticsearch luego de realizar el NER", 
+    };
+   
+    try {
+       const response = await fetch('http://localhost:5000/traza', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify(traceData),
+       });
+   
+       if (!response.ok) {
+         throw new Error('Error al enviar la traza');
+       }
+   
+       const data = await response.json();
+       console.log('Traza enviada con éxito:', data);
+    } catch (error) {
+       console.error('Error al enviar la traza:', error);
+    }
+   };
 
   return (
     <Stack display={"flex"} flexDirection={"row"}>

@@ -54,6 +54,8 @@ def concat_data_to_review():
             doc_source = doc['_source']
             es.index(index="es_train_data", id=doc_id, body=doc_source)
             
+        print(getPythonzonas("es_train_data"))
+            
        
     except Exception as e:
         print(f"Error en la concatenacion de train data to review: {e}")

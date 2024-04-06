@@ -52,26 +52,10 @@ python -m spacy download es_core_news_lg
 - [Spacy Model](https://spacy.io/models/es)
 
 
-# Install Docker
-Install docker on your computer
-## Create container
-```bash 
-sudo docker build -t sentence_generator . 
-``` 
-## Run container
-``` bash
-sudo docker run -p 8000:8000 sentence_generator 
-```
+# Download and Install Ollama
+- [download ollama](https://ollama.com/)
 
-# Create Docker Container
-## Create Docker Container
-docker build -t sentence_generator .
-
-## Run Docker Container
-docker run -p 8000:8000 sentence_generator
-
-#Run Backend
-
+## Install llama2 model
 ```bash
-uvicorn main:app --reload --port 5000
+ollama run llama2
 ```

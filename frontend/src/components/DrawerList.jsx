@@ -29,6 +29,7 @@ export default function DrawerList() {
      { text: "Name Entity recognition", url: "/ner" },
      { text: "Train", url: "/train" },
      { text: "Test", url: "/prueba" },
+     ...(isAdmin() ? [{ text: "Train Model Admin", url: "/train_model_admin" }] : []),
      ...(isAdmin() ? [{ text: "Users Admin", url: "/users_admin" }] : []),
   ];
  

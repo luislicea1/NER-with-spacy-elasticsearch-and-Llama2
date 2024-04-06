@@ -11,6 +11,7 @@ const Prueba = lazy(() => import("../pages/Prueba"));
 const ErrorPage = lazy(() => import("../pages/ErrorPage"));
 const Login = lazy(() => import("../pages/Login"));
 const UsersAdmin = lazy(() => import("../pages/UsersAdmin"));
+const TrainModelAdmin = lazy(()=>import("../pages/TrainModelAdmin"))
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
           {
             path: "train",
             element: <Train />,
+          },
+          {
+            path: "train_model_admin",
+            element: <TrainModelAdmin />,
           },
           {
             path: "prueba",

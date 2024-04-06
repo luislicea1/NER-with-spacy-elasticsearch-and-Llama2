@@ -19,15 +19,6 @@ Once downloaded, you can install Elasticsearch on Windows using the .zip file. T
 8. Open the browser on port 9200
 9. User `elastic` and the password we saved previously
 
-## Steps to configure Kibana
-
-1. Download Kibana
-2. Enter the path in `elasticsearch bin/` and open a cmd and copy this command: ```elasticsearch-reset-password -u kibana_system```
-3. We copy the generated password and paste it in the file in `kibana/config/kibana.yml`: `elasticsearch.password: "here goes the generated password"`
-4. Execute`bin/kibana.bat`
-5. User: `elastic`, password the one we keep `elastic`
-6. When entering Kibana change the password to `elastic`
-
 - [Instalacion](https://www.youtube.com/watch?v=BybAetckH88&t=285s)
 
 # Install Spacy

@@ -11,12 +11,14 @@ import {
   Button,
 } from "@mui/material";
 import { Select, MenuItem } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 
 export default function AddUser({ fetchData }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rol, setRol] = useState("");
   const [open, setOpen] = useState(false);
+  const [t,i18n] =useTranslation("global");
 
   const handleInsert = () => {
     setOpen(true);
@@ -67,7 +69,7 @@ export default function AddUser({ fetchData }) {
     >
       <Stack>
         <Button variant="contained" onClick={handleInsert}>
-          Add User
+         {t("btn.add_user")}
         </Button>
       </Stack>
 
@@ -84,6 +86,7 @@ export default function AddUser({ fetchData }) {
           <TextField
             label="Password"
             fullWidth
+            type="password"
             sx={{ marginTop: "20px" }}
             onChange={(e) => setPassword(e.target.value)}
             value={password}

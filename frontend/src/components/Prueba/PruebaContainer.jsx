@@ -1,9 +1,9 @@
 import { Badge, Typography, Stack, Button, Container, LinearProgress, Box , Divider, Card, TextField} from "@mui/material";
 import React, { useState, useEffect } from "react";
-
+import { useTranslation } from 'react-i18next';
 
 export default function PruebaContainer() {
-
+    const [t,i18n] =useTranslation("global");
     const [inputData, setInputData] = useState({ message: "" });
     const [result, setResult] = useState(null);
     const [html, setHtml] = useState("");
@@ -42,7 +42,7 @@ export default function PruebaContainer() {
                 padding={2}
             >
                 <Typography variant="h6" align="left" gutterBottom color="black" >
-                    Prueba
+                    {t("content.test")}
                 </Typography>
                 <Divider></Divider>
                 <Box marginTop={2}>
@@ -63,7 +63,7 @@ export default function PruebaContainer() {
                             });
                         }}
                     />
-                    <Button onClick={handleSend} variant="contained" sx={{marginTop: "10px"}} >Send</Button>
+                    <Button onClick={handleSend} variant="contained" sx={{marginTop: "10px"}} >{t("btn.send")}</Button>
                 </Box>
             </Box>
 
@@ -80,7 +80,7 @@ export default function PruebaContainer() {
                  }}
             >
                 <Typography variant="h6" align="left" gutterBottom color="black">
-                    Resultado
+                    {t("content.result")}
                 </Typography>
                 <Divider></Divider>
                 {loading && <LinearProgress></LinearProgress>}

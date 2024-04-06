@@ -174,6 +174,7 @@ export default function UsersAdminContainer() {
             label="Password"
             value={password}
             fullWidth
+            type="password"
             sx={{ marginTop: "20px" }}
             onChange={(e) => setPassword(e.target.value)}
           />

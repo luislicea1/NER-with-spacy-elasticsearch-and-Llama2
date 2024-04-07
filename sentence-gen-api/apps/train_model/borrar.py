@@ -156,7 +156,7 @@ async def post_save_in_elastic(post: ModelTrainData):
         for token in doc.ents:
             print(token.text,token.start_char, token.end_char,token.label_)
     
-        
+        #
     except Exception as e:
         print(f"Error en train model es: Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))

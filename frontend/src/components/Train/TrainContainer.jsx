@@ -70,10 +70,10 @@ export default function TrainContainer(){
             body: JSON.stringify(data)
         };
         try {
-            const response = await fetch("http://localhost:5000/train_model_es_borrar", requestOptions);
+            const response = await fetch("http://localhost:5000/train_model_without_loss", requestOptions);
             const responseData = await response.json();
-            console.log(responseData);
-            // setResult(null);
+            alert(responseData);
+            setResult(null);
             setLoading(false);
             sendTrace("Entreno modelo de reconocimiento de entidades")
         } catch (error) {

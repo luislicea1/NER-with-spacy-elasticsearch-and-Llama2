@@ -117,28 +117,28 @@ def split_data(data: Dict[str, dict]) -> Tuple[Dict[str, dict], Dict[str, dict]]
     
     return train_data, test_data
 
-@elastic_router_train_model.post('/train_model_es')
-async def post_save_in_elastic(post: ModelTrainData):
-    try:
-        save_train_data(post, "es_train_data")
+# @elastic_router_train_model.post('/train_model_es')
+# async def post_save_in_elastic(post: ModelTrainData):
+#     try:
+#         save_train_data(post, "es_train_data")
         
-        arr = getPythonzonas()
-        TRAIN_DATA = prepare_train_data(arr)
+#         arr = getPythonzonas()
+#         TRAIN_DATA = prepare_train_data(arr)
         
-        n_iter = 100
-        nlp = load_or_create_model(output_dir)
+#         n_iter = 100
+#         nlp = load_or_create_model(output_dir)
         
-        configure_ner(nlp)
+#         configure_ner(nlp)
         
-        examples = convert_to_examples(TRAIN_DATA, nlp)
+#         examples = convert_to_examples(TRAIN_DATA, nlp)
         
-        train_model(nlp, examples, n_iter)
+#         train_model(nlp, examples, n_iter)
         
-        nlp.to_disk(output_dir)
+#         nlp.to_disk(output_dir)
         
-    except Exception as e:
-        print(f"Error en train model es: Error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+#     except Exception as e:
+#         print(f"Error en train model es: Error: {e}")
+#         raise HTTPException(status_code=500, detail=str(e))
 
 
 

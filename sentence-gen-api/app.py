@@ -15,7 +15,7 @@ from apps.add_test_data.add_test_data import elastic_router_add_test_data
 from apps.users_admin.users_admin import elastic_router_users_admin
 from apps.train_model.train_model import elastic_router_train_model
 from apps.trazas.trazas import elastic_router_traza
-from apps.train_model.borrar import elastic_router_prueba
+from apps.train_model.training_without_loss import elastic_router_prueba
 
 app = FastAPI(description="Generador de Oraciones usando IA")
 app.include_router(elastic_router)
@@ -62,7 +62,7 @@ async def sentences_generation(input: SentenceInputModel):
         question_list = []
 
         docs = text_process(input.text)
-        for _ in range(1):
+        for _ in range(3):
             questions = question_gen_chain.run(docs)
             question_list.append(questions)
             

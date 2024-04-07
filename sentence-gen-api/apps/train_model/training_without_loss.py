@@ -15,8 +15,11 @@ from fastapi import APIRouter, HTTPException
 from path import output_dir
 from typing import List, Dict, Tuple
 import os
+from apps.model_stats.model_stats import calculate_metrics
 
 es =Elasticsearch(['http://localhost:9200'], basic_auth=('elastic', 'elastic'))
+elastic_router_prueba = APIRouter()
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class Entity(BaseModel):
     name: str
@@ -44,23 +47,9 @@ def getPythonzonas(indexName):
     docs = es.search(index=indexName, body={"query": {"match_all": {}}}, size=1000)
     return [docEntity(d) for d in docs["hits"]["hits"]]
 
-elastic_router_prueba = APIRouter()
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-
-# def prepare_train_data(arr):
-#     TRAIN_DATA = []
-#     for el in arr:
-#         texto = el["_source"]["text"]
-#         entities = el["_source"]["entities"]
-#         entities_formatted = [(entity["start"], entity["end"], entity["label"]) for entity in entities]
-#         resultado = (texto, {"entities": entities_formatted})
-#         TRAIN_DATA.append(resultado)
-#     return TRAIN_DATA
 def prepare_train_data(train_data, arr):
     TRAIN_DATA = []
     
-    # Procesar train_data
     for el_id, el in train_data.items():
         texto = el.text
         entities = el.entities
@@ -68,7 +57,6 @@ def prepare_train_data(train_data, arr):
         resultado = (texto, {"entities": entities_formatted})
         TRAIN_DATA.append(resultado)
     
-    # Procesar arr
     for item in arr:
         texto = item["_source"]["text"]
         entities = item["_source"]["entities"]
@@ -130,33 +118,66 @@ def split_data(data: Dict[str, dict]) -> Tuple[Dict[str, dict], Dict[str, dict]]
     
     return train_data, test_data
 
+def convert_to_documentos_format_to_save(post_data):
+    documentos = {}
+    for key, sentence_with_entities in post_data.items():
+        entities = []
+        for entity in sentence_with_entities.entities:
+            entities.append({
+                'start': entity.start,
+                'end': entity.end,
+                'label': entity.label
+            })
+        documentos[key] = {
+            'text': sentence_with_entities.text,
+            'entities': entities
+        }
+    return documentos
 
-@elastic_router_prueba.post('/train_model_es_borrar')
+def get_index_count(es, index):
+    response = es.count(index=index)
+    return response['count']
+
+def save_data(post,indexName):
+    try:
+        new_data = convert_to_documentos_format_to_save(post_data=post)
+        print(new_data)
+        total_docs = get_index_count(es, indexName)
+        
+        for i, doc in enumerate(new_data.values(), start=1):
+            es.index(index=indexName, id=total_docs + i, document=doc)
+        
+    except Exception as e:
+        print(f"Error al guardar los datos en ELK: Error: {e}")
+
+@elastic_router_prueba.post('/train_model_without_loss')
 async def post_save_in_elastic(post: ModelTrainData):
     try:
         
         train_data, test_data = split_data(post.data.data)
-        arr = getPythonzonas("es_train_data")
-        concat = prepare_train_data(train_data, arr)
         
-        # TRAIN_DATA = prepare_train_data(arr)
+        arr_train_data = getPythonzonas("es_train_data")
+        train_data_concat = prepare_train_data(train_data, arr_train_data)
         
-        n_iter = 100
+        arr_test_data = getPythonzonas("es_test_data")
+        test_data_concat = prepare_train_data(test_data, arr_test_data)
+        
         nlp = load_or_create_model(output_dir)
-        
+        n_iter = 100
         configure_ner(nlp)
-        
-        examples = convert_to_examples(concat, nlp)
-        
+        examples = convert_to_examples(train_data_concat, nlp)
         train_model(nlp, examples, n_iter)
         
-        text = "El equipo teamacere perdio contra los estados unidos el dia 10 de marzo"
-        doc = nlp(text)
-
-        for token in doc.ents:
-            print(token.text,token.start_char, token.end_char,token.label_)
-    
-        #
+        metrics = calculate_metrics(test_data_concat, nlp)
+        
+        if metrics:
+            save_data(train_data,"es_train_data")
+            save_data(test_data,"es_test_data")
+            nlp.to_disk(output_dir)
+            return "El modelo ah sido reentrenado satisfactoriamente"
+        else:
+            return "El modelo no se pudo reentrenar ya que tuvo perdidas de conocimiento, por favor vuelva a generar otros datos de entrenamiento"
+        
     except Exception as e:
         print(f"Error en train model es: Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))

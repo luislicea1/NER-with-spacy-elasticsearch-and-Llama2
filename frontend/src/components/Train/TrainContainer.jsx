@@ -1,4 +1,4 @@
-import { Badge, Typography, Stack, Button, LinearProgress, Box, Divider, TextField, Modal} from "@mui/material";
+import { Badge, Typography, Stack, Button, LinearProgress, Box, Divider, TextField, Modal, FormControl, Select, MenuItem, InputLabel} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -146,6 +146,7 @@ export default function TrainContainer(){
                         fullWidth
                         value={inputData.entity}
                         onChange={handleChange}
+                        required
                     />
                     <TextField
                         id="text"
@@ -156,8 +157,9 @@ export default function TrainContainer(){
                         fullWidth
                         value={inputData.text}
                         onChange={handleChange}
+                        required
                     />
-                    <TextField
+                    {/* <TextField
                         id="entity_type"
                         name="entity_type"
                         label={t("input.write_entity_type")}
@@ -166,7 +168,22 @@ export default function TrainContainer(){
                         fullWidth
                         value={inputData.entity_type}
                         onChange={handleChange}
-                    />
+                    /> */}
+                    <FormControl fullWidth required>
+                        <InputLabel id="demo-simple-select-label">Entity Type</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={inputData.entity_type}
+                            label="Entity Type"
+                            onChange={handleChange}
+                        >
+                            <MenuItem value={"ORG"}>ORG</MenuItem>
+                            <MenuItem value={"PERSON"}>PERSON</MenuItem>
+                            <MenuItem value={"LOC"}>LOC</MenuItem>
+                            <MenuItem value={"DATE"}>DATE</MenuItem>
+                        </Select>
+                        </FormControl>
                     <Button variant="contained" onClick={onClickIndex} sx={{marginTop: "10px"}} disabled={loading}>
                         {t("btn.send")}
                     </Button>

@@ -3,7 +3,7 @@ import spacy
 
 es =Elasticsearch(['http://localhost:9200'], basic_auth=('elastic', 'elastic'))
 indexNametoSave = "model_stats"
-indexName = "archivo_para_comprobar"
+indexName = "es_test_data"
 
 settings = {
     "mappings": {

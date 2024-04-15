@@ -25,4 +25,5 @@ async def create_post(post: Post):
        post.message = displacy.render(doc,style='ent')
        return ResponseModel(message=post.message)
    except Exception as e:
+       print(f"Error en test: Error: {e}")
        raise HTTPException(status_code=500, detail=str(e))

@@ -19,6 +19,7 @@ export default function TrainContainer(){
             ...prevData,
             [name]: value
         }));
+        console.log("Nuevo estado:", { ...inputData, [name]: value });
     };
     
     async function onClickIndex() {
@@ -169,7 +170,7 @@ export default function TrainContainer(){
                         value={inputData.entity_type}
                         onChange={handleChange}
                     /> */}
-                    <FormControl fullWidth required>
+                    <FormControl fullWidth required >
                         <InputLabel id="demo-simple-select-label">Entity Type</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
@@ -177,13 +178,14 @@ export default function TrainContainer(){
                             value={inputData.entity_type}
                             label="Entity Type"
                             onChange={handleChange}
+                            name="entity_type"
                         >
                             <MenuItem value={"ORG"}>ORG</MenuItem>
                             <MenuItem value={"PERSON"}>PERSON</MenuItem>
                             <MenuItem value={"LOC"}>LOC</MenuItem>
                             <MenuItem value={"DATE"}>DATE</MenuItem>
                         </Select>
-                        </FormControl>
+                    </FormControl>
                     <Button variant="contained" onClick={onClickIndex} sx={{marginTop: "10px"}} disabled={loading}>
                         {t("btn.send")}
                     </Button>

@@ -5,6 +5,7 @@ import random, json
 from spacy.util import minibatch, compounding
 import time
 
+spacy.prefer_gpu()
 def load_data(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
@@ -109,15 +110,15 @@ def calculate_metrics(es_test_data, nlp):
     
     
             
-# train_data = load_data('D:/Tesis3/dataset/CONLL-NERC-es/train.json')
-# test_data = load_data('D:/Tesis3/dataset/CONLL-NERC-es/test.json')   
+train_data = load_data('D:/Tesis/CONLL-NERC-es/CONLL-NERC-es/train.json')
+test_data = load_data('D:/Tesis/CONLL-NERC-es/CONLL-NERC-es/test.json')   
 
 # train_data = load_data('D:/Tesis3/dataset/hackathon-somos-nlp-2023podcasts-ner-es/train.json')
 # test_data = load_data('D:/Tesis3/dataset/hackathon-somos-nlp-2023podcasts-ner-es/test.json')   
 
 
-train_data = load_data('D:/Tesis3/dataset/hlhdatsciencees-ner-massive/train.json')
-test_data = load_data('D:/Tesis3/dataset/hlhdatsciencees-ner-massive/test.json')   
+# train_data = load_data('D:/Tesis3/dataset/hlhdatsciencees-ner-massive/train.json')
+# test_data = load_data('D:/Tesis3/dataset/hlhdatsciencees-ner-massive/test.json')   
 
 #D:\Tesis3\dataset         
            
